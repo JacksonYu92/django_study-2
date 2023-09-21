@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div style="margin-bottom: 10px">
+    <a class="btn btn-success" href="/phone/add/">
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> 新建手机号
+    </a>
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>手机号</th>
+        <th>价格</th>
+        <th>级别</th>
+        <th>状态</th>
+        <th>管理员</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in queryset %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.mobile }}</td>
+        <td>{{ row.price }}</td>
+        <td>{{ row.get_level_display }}</td>
+        <td>{{ row.get_status_display }}</td>
+        <td>{{ row.admin.username }}</td>
+        <td>
+            <a class="btn btn-primary btn-xs" href="/phone/edit/{{ row.id }}">编辑</a>
+
+            <input type="button" value="删除" class="btn btn-danger btn-xs" onclick="deleteAction({{ row.id }});">
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+      <button type="button" class="close"></button>
+      <h4>是否确定要删除？</h4>
+      <p style="margin: 20px 0;">删除后，与之关联的所有相关的数据都会被删除掉，确认是否继续？</p>
+      <p>
+        <button type="button" class="btn btn-danger" onclick="confirmDelete()">确 认</button>
+        <button type="button" class="btn btn-default" onclick="cancelDelete()">取 消</button>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        DELETE_ID = 0;
+
+        function deleteAction(id){
+            DELETE_ID = id;
+            $('#myModal').modal('show');
+        }
+
+        function confirmDelete(){
+            $.ajax({
+                url: "/phone/delete/",
+                type: "GET",
+                data: {
+                    aid: DELETE_ID
+                },
+                dataType: "JSON",
+                success: function (res) {
+                    if(res.status){
+                        location.reload()
+                    } else {
+                        alert(res.error);
+                    }
+                    console.log("请求返回值:", res);
+                }
+            })
+        };
+
+        function cancelDelete(){
+            DELETE_ID = 0;
+            $('#myModal').modal('hide');
+        }
+    </script>
+
+{% endblock %}

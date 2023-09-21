@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% for item in form %}
+  <p>
+    {{ item.label }}:{{ item }}
+    <span>{{ form.title.errors.0 }}</span>
+  </p>
+  {% endfor %}
+<!--  <p>-->
+<!--    {{ form.title.label }}:{{ form.title }}-->
+<!--    <span>{{ form.title.errors.0 }}</span>-->
+<!--  </p>-->
+<!--  <p>-->
+<!--    {{ form.count.label }}:{{ form.count }}-->
+<!--  <span>{{ form.count.errors.0 }}</span>-->
+<!--  </p>-->
+  <input type="submit" value="提交"/>
+</form>
+{% endblock %}

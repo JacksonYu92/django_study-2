@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.4.1/css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="panel panel-default" style="margin: 10px 0;">
+      <div class="panel-heading">添加部门</div>
+      <div class="panel-body">
+
+          <form class="form-inline" method="post" action="/add/depart/">
+              {% csrf_token %}
+              <div class="form-group">
+                <label class="sr-only">部门名称</label>
+                <input class="form-control" type="text" placeholder="部门名称" name="title">
+              </div>
+              <div class="form-group">
+                <label class="sr-only">数量</label>
+                <input class="form-control" type="text" placeholder="人数" name="count" />
+              </div>
+              <button type="submit" class="btn btn-primary">保存</button>
+            </form>
+      </div>
+    </div>
+
+
+    </div>
+</body>
+</html>

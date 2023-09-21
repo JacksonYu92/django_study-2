@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <style>
+        .login-box{
+            width: 400px;
+            height: 280px;
+            margin-left:auto;
+            margin-right:auto;
+            border: 1px solid #dddddd;
+            margin-top:220px;
+            padding-left:20px;
+            padding-right:20px;
+        }
+        .login-box h2{
+            text-align:center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>用户登录</h2>
+        <form method="post" action="/login/">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>用户名</label>
+            <input type="text" class="form-control" placeholder="请输入用户名" name="user">
+          </div>
+          <div class="form-group">
+            <label>密码</label>
+            <input type="password" class="form-control" placeholder="请输入密码" name="pwd">
+          </div>
+
+          <button type="submit" class="btn btn-primary">提交</button>
+          <span style="color:red;">{{ error }}</span>
+        </form>
+    </div>
+
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
